@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+body {
+	background:
+		url('https://www.acquisition-international.com/wp-content/uploads/2023/02/AdobeStock_560688863-1.jpg')
+		no-repeat center center/cover;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: Arial, sans-serif;
+	margin: 0;
+}
+
+.login-container {
+	background-color: rgba(255, 255, 255, 0.9);
+	padding: 2rem;
+	border-radius: 15px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+	color: #000;
+	max-width: 400px;
+	width: 100%;
+	animation: fadeIn 0.8s ease-in-out;
+	position: relative;
+}
+
+@keyframes fadeIn {from { opacity:0;
+	transform: translateY(-20px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+}
+.login-header {
+	text-align: center;
+	margin-bottom: 1.5rem;
+}
+
+.form-control, .form-control:focus {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding: 0.75rem;
+	box-shadow: none;
+	transition: all 0.3s ease-in-out;
+}
+
+.form-control:hover {
+	border-color: #6a11cb;
+}
+
+.form-control:focus {
+	border-color: #6a11cb;
+	box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.2);
+}
+
+.btn-primary {
+	background-color: #6a11cb;
+	border: none;
+	transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+	background-color: #2575fc;
+	transform: scale(1.02);
+}
+
+.register-link {
+	text-align: center;
+	margin-top: 1rem;
+}
+
+.register-link a {
+	color: #6a11cb;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.register-link a:hover {
+	text-decoration: underline;
+}
+
+.toggle-password i {
+	transition: transform 0.2s ease;
+}
+
+.toggle-password i:hover {
+	transform: scale(1.2);
+}
+
+.text-danger {
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+
+.input-group-text i {
+	transition: transform 0.2s ease;
+}
+
+.input-group-text:hover i {
+	transform: scale(1.2);
+	color: #6a11cb;
+}
+</style>
+</head>
+<body>
+	<div class="login-container">
+		<div class="login-header">
+			<h2>Welcome Back!</h2>
+			<p>Please login to your account</p>
+		</div>
+
+		<form th:action="@{/getUser}" th:object="${Luser}" method="post">
+			<div class="form-group mb-3">
+				<label for="email" class="form-label">Email</label> <input
+					type="email" th:field="*{email}" id="email" class="form-control"
+					placeholder="Enter your email" required />
+			</div>
+
+			<div class="form-group mb-3">
+				<label for="password" class="form-label">Password</label>
+				<div class="input-group">
+					<input type="password" th:field="*{password}" id="password"
+						autocomplete="off" class="form-control"
+						placeholder="Enter your password" required /> <span
+						class="input-group-text" onclick="togglePassword()"
+						style="cursor: pointer;" aria-label="Toggle password visibility">
+						<i id="toggleIcon" class="bi bi-eye-fill"></i>
+					</span>
+				</div>
+			</div>
+
+			<button type="submit" class="btn btn-primary w-100">Login</button>
+		</form>
+
+		<div th:if="${error}" class="text-danger text-center mt-3"
+			th:text="${error}"></div>
+
+		<div class="register-link">
+			<p>
+				Don't have an account? <a th:href="@{/Register}">Register here</a>
+			</p>
+		</div>
+	</div>
+
+	<script>
+		function togglePassword() {
+			const passwordField = document.getElementById("password");
+			const toggleIcon = document.getElementById("toggleIcon");
+
+			if (passwordField.type === "password") {
+				passwordField.type = "text";
+				toggleIcon.classList.remove("bi-eye-fill");
+				toggleIcon.classList.add("bi-eye-slash-fill");
+			} else {
+				passwordField.type = "password";
+				toggleIcon.classList.remove("bi-eye-slash-fill");
+				toggleIcon.classList.add("bi-eye-fill");
+			}
+		}
+	</script>
+</body>
+</html>

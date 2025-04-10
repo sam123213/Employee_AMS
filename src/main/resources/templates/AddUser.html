@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add User</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<style>
+.form-control:focus {
+	box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+	border-color: #0d6efd;
+}
+
+.toggle-password {
+	cursor: pointer;
+}
+
+.input-group-text {
+	background-color: white;
+	border-left: 0;
+}
+
+.role-select option:checked {
+	background-color: #0d6efd;
+	color: white;
+}
+
+.card-body {
+	padding-top: 1rem !important;
+	padding-bottom: 1rem !important;
+}
+</style>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<h2 class="text-center mb-4">Add New User</h2>
+
+		<form th:action="@{/admin/addUser}" th:object="${addEmp}"
+			method="post" onsubmit="return validateForm()">
+			<div class="card shadow-sm">
+				<div class="card-header bg-primary text-white text-center">
+					<h4>Create New User</h4>
+				</div>
+				<div class="card-body">
+
+					<!-- Name Field -->
+					<div class="form-group mb-3">
+						<label class="fw-bold">Name</label> <input type="text" id="name"
+							th:field="*{name}" class="form-control shadow-sm"
+							placeholder="Enter the full name"> <span
+							class="text-danger font-italic" id="nameError"></span>
+					</div>
+
+					<!-- Email Field -->
+					<div class="form-group mb-3">
+						<label class="fw-bold">Email</label> <input type="email"
+							id="email" th:field="*{email}" class="form-control shadow-sm"
+							placeholder="Enter a valid email address"> <span
+							class="text-danger font-italic" id="emailError"></span>
+					</div>
+
+					<!-- Password Field with Toggle -->
+					<div class="form-group mb-3">
+						<label class="fw-bold">Password</label>
+						<div class="input-group">
+							<input type="password" id="password" th:field="*{password}"
+								class="form-control shadow-sm"
+								placeholder="Choose a strong password"> <span
+								class="input-group-text toggle-password"
+								onclick="togglePassword()"
+								aria-label="Toggle password visibility"> <i
+								id="toggleIcon" class="bi bi-eye-fill"></i>
+							</span>
+						</div>
+						<span class="text-danger font-italic" id="passwordError"></span>
+					</div>
+
+					<!-- Role Selection -->
+					<div class="form-group mb-3">
+						<label for="role" class="fw-bold">Role</label> <select id="role"
+							th:field="*{role}" class="form-select" required>
+							<option hidden value="">Select your role</option>
+							<option value="ADMIN">ADMIN</option>
+							<option value="EMPLOYEE">EMPLOYEE</option>
+						</select> <span class="text-danger font-italic" id="roleError"></span>
+					</div>
+
+					<!-- Action Buttons -->
+					<div class="form-group text-center">
+						<button type="submit"
+							class="btn btn-success btn-lg px-4 py-2 shadow">
+							<i class="bi bi-save"></i> Save User
+						</button>
+						<a th:href="@{/getAllEmp}"
+							class="btn btn-secondary btn-lg px-4 py-2 shadow ms-3">Cancel</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Script Section -->
+	<script>
+		function togglePassword() {
+			const passwordField = document.getElementById("password");
+			const toggleIcon = document.getElementById("toggleIcon");
+
+			if (passwordField.type === "password") {
+				passwordField.type = "text";
+				toggleIcon.classList.remove("bi-eye-fill");
+				toggleIcon.classList.add("bi-eye-slash-fill");
+			} else {
+				passwordField.type = "password";
+				toggleIcon.classList.remove("bi-eye-slash-fill");
+				toggleIcon.classList.add("bi-eye-fill");
+			}
+		}
+
+		function validateForm() {
+			let valid = true;
+
+			const name = document.getElementById("name").value.trim();
+			const email = document.getElementById("email").value.trim();
+			const password = document.getElementById("password").value.trim();
+			const role = document.getElementById("role").value;
+
+			// Clear previous errors
+			document.getElementById("nameError").innerText = "";
+			document.getElementById("emailError").innerText = "";
+			document.getElementById("passwordError").innerText = "";
+			document.getElementById("roleError").innerText = "";
+
+			if (!name) {
+				document.getElementById("nameError").innerText = "Name is required.";
+				valid = false;
+			}
+
+			if (!email) {
+				document.getElementById("emailError").innerText = "Email is required.";
+				valid = false;
+			}
+
+			if (!password) {
+				document.getElementById("passwordError").innerText = "Password is required.";
+				valid = false;
+			}
+
+			if (!role) {
+				document.getElementById("roleError").innerText = "Please select a role.";
+				valid = false;
+			}
+
+			return valid;
+		}
+	</script>
+</body>
+</html>

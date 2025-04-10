@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Unauthorized</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container my-5 text-center">
+        <h2 class="text-danger">Unauthorized Access</h2>
+        <p class="lead">You do not have permission to view this page.</p>
+        <a th:href="@{/home}" class="btn btn-primary">Go to Home</a>
+    </div>
+</body>
+</html>

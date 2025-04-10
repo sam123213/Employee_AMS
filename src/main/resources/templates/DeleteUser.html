@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete User</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        }
+        .btn-lg {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-lg:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .alert-icon {
+            font-size: 3rem;
+            color: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <i class="fas fa-exclamation-triangle alert-icon"></i>
+            <h2 class="mt-3 text-danger">Delete User Confirmation</h2>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-danger text-white text-center">
+                <h4><i class="fas fa-user-times"></i> Confirm Deletion</h4>
+            </div>
+
+            <div class="card-body">
+                <p class="text-center text-muted">You are about to delete the following user. This action <strong>cannot be undo</strong>.</p>
+
+                <!-- User Details Table -->
+                <table class="table table-bordered w-75 mx-auto mb-4" th:each="Emp : ${Employee}">
+                    <tr>
+                        <th>User ID</th>
+                        <td th:text="${Emp.userId}"></td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td th:text="${Emp.name}"></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td th:text="${Emp.email}"></td>
+                    </tr>
+                    <tr>
+                        <th>Role</th>
+                        <td th:text="${Emp.role}"></td>
+                    </tr>
+                </table>
+
+                <!-- Delete Action Buttons -->
+                <form th:action="@{/deleteUser/{id}(id=${Employee.userId})}" method="post" class="text-center">
+                    <button type="submit" class="btn btn-danger btn-lg px-4 py-2">
+                        <i class="fas fa-trash-alt"></i> Yes, Delete
+                    </button>
+                    <a th:href="@{/getAllEmp}" class="btn btn-secondary btn-lg px-4 py-2 ml-3">
+                        <i class="fas fa-times-circle"></i> Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
