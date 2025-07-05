@@ -84,6 +84,8 @@
 						<label for="role" class="fw-bold">Role</label> <select id="role"
 							th:field="*{role}" class="form-select" required>
 							<option hidden value="">Select your role</option>
+							<option value="MANAGER">MANAGER</option>
+							<option value="HR">HR</option>
 							<option value="ADMIN">ADMIN</option>
 							<option value="EMPLOYEE">EMPLOYEE</option>
 						</select> <span class="text-danger font-italic" id="roleError"></span>
